@@ -66,3 +66,4 @@ zfs set mountpoint=legacy system
 zfs set mountpoint=/usr system/usr
 zfs set mountpoint=/var system/var
 zfs set mountpoint=/data data
+
