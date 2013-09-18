@@ -15,7 +15,7 @@ gpart bootcode -b /boot/pmbr -p /boot/gptzfsboot -i 1 ada1
 (2) Организовать место для для хранения кеша zpool.cache
 mdmfs -s 1m md /boot/zfs
 
-(3) Далее создаем пулы: один для системы, второй - для данных. Таким образом в будущем проще будет манипулировать хранилищем.
+(3) Далее создаем пулы: один для системы, второй - для данных.
 zpool create -O atime=off -O mountpoint=/mnt system mirror /dev/gpt/system*
 zpool create -O atime=off -O mountpoint=legacy data mirror /dev/gpt/data*
 zpool set bootfs=system system
