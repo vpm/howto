@@ -1,0 +1,68 @@
+(1) Удаляем все что было и размечаем
+gpart destory -F ada0
+gpart destory -F ada1
+gpart create -s gpt ada0
+gpart create -s gpt ada1
+gpart add -a 4k -s 128k -t freebsd-boot ada0
+gpart add -a 4k -s 128k -t freebsd-boot ada1
+gpart add -a 4k -s 40g -t freebsd-zfs -l system0 ada0
+gpart add -a 4k -s 40g -t freebsd-zfs -l system1 ada1
+gpart add -a 4k -t freebsd-zfs -l data0 ada0
+gpart add -a 4k -t freebsd-zfs -l data1 ada1
+gpart bootcode -b /boot/pmbr -p /boot/gptzfsboot -i 1 ada0
+gpart bootcode -b /boot/pmbr -p /boot/gptzfsboot -i 1 ada1
+
+(2) Организовать место для для хранения кеша zpool.cache
+mdmfs -s 1m md /boot/zfs
+
+(3) Далее создаем пулы: один для системы, второй - для данных. Таким образом в будущем проще будет манипулировать хранилищем.
+zpool create -O atime=off -O mountpoint=/mnt system mirror /dev/gpt/system*
+zpool create -O atime=off -O mountpoint=legacy data mirror /dev/gpt/data*
+zpool set bootfs=system system
+
+(4)Создаем файл подкачки, подключаем его и отключаем проверку контрольных сумм
+zfs create -V 1GB -o org.freebsd:swap=on -o checksum=off system/swap
+
+(5) Create appropriate filesystems (feel free to improvise!).
+zfs create -p system/usr/local/etc
+zfs create -o compression=on system/usr/ports
+zfs create -o compression=on system/usr/src
+zfs create -p system/var/db/openldap-data
+zfs create -p system/var/named/etc/namedb
+zfs create system/var/empty
+zfs create system/var/log
+zfs create system/var/tmp
+
+(6) Распаковываем систему
+cd /usr/freebsd-dist
+cat base.txz | tar --unlink -xpJf - -C /mnt/
+cat kernel.txz | tar --unlink -xpJf - -C /mnt/
+cat lib32.txz | tar --unlink -xpJf - -C /mnt/
+
+(7) Далее необходимо скопировать кеш zpool-а в установленную систему
+cp /boot/zfs/zpool.cache /mnt/boot/zfs/
+
+(8) Настраиваем будущую систему
+chroot /mnt
+
+ee /etc/rc.conf 
+zfs_enable="YES"
+
+ee /boot/loader.conf 
+zfs_load="YES"
+
+ee /etc/fstab
+system  /       zfs rw 0 0
+
+ee /etc/csh.cshrc
+setenv LANG ru_RU.UTF-8
+
+passwd root
+tzsetup
+
+(9) Unmount everything and fix mountpoints for system boot.
+zfs umount -af
+zfs set mountpoint=legacy system
+zfs set mountpoint=/usr system/usr
+zfs set mountpoint=/var system/var
+zfs set mountpoint=/data data
