@@ -30,8 +30,6 @@ zfs create -p system/usr/local/etc
 zfs create -o compression=on system/usr/home
 zfs create -o compression=on system/usr/ports
 zfs create -o compression=on system/usr/src
-zfs create -p system/var/db/openldap-data
-zfs create -p system/var/named/etc/namedb
 zfs create system/var/empty
 zfs create system/var/crash
 zfs create system/var/log
