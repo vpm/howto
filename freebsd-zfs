@@ -18,20 +18,25 @@ mdmfs -s 1m md /boot/zfs
 (3) Далее создаем пулы: один для системы, второй - для данных.
 zpool create -O atime=off -O mountpoint=/mnt system mirror /dev/gpt/system*
 zpool create -O atime=off -O mountpoint=legacy data mirror /dev/gpt/data*
-zpool set bootfs=system system
+zpool set bootfs=system/ROOT/default system
 
 (4)Создаем файл подкачки, подключаем его и отключаем проверку контрольных сумм
 zfs create -V 1GB -o org.freebsd:swap=on -o checksum=off system/swap
 
 (5) Create appropriate filesystems (feel free to improvise!).
+zfs create -p -o mountpoint=none system/ROOT
+zfs create system/ROOT/default
 zfs create -p system/usr/local/etc
+zfs create -o compression=on system/usr/home
 zfs create -o compression=on system/usr/ports
 zfs create -o compression=on system/usr/src
 zfs create -p system/var/db/openldap-data
 zfs create -p system/var/named/etc/namedb
 zfs create system/var/empty
+zfs create system/var/crash
 zfs create system/var/log
 zfs create system/var/tmp
+zfs create system/tmp
 
 (6) Распаковываем систему
 cd /usr/freebsd-dist
@@ -51,9 +56,6 @@ zfs_enable="YES"
 ee /boot/loader.conf 
 zfs_load="YES"
 
-ee /etc/fstab
-system  /       zfs rw 0 0
-
 ee /etc/csh.cshrc
 setenv LANG ru_RU.UTF-8
 
@@ -62,8 +64,7 @@ tzsetup
 
 (9) Unmount everything and fix mountpoints for system boot.
 zfs umount -af
-zfs set mountpoint=legacy system
+zfs set mountpoint=legacy system/ROOT/default
 zfs set mountpoint=/usr system/usr
 zfs set mountpoint=/var system/var
 zfs set mountpoint=/data data
-
