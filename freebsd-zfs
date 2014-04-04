@@ -66,7 +66,7 @@ tzsetup
 
 (9) Unmount everything and fix mountpoints for system boot.
 zfs umount -af
-zfs set mountpoint=legacy system/ROOT/default
+zfs set mountpoint=/ system/ROOT/default
 zfs set mountpoint=/usr system/usr
 zfs set mountpoint=/var system/var
 zfs set mountpoint=/data data
