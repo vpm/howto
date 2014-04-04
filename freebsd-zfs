@@ -1,6 +1,6 @@
 (1) Удаляем все что было и размечаем
-gpart destory -F ada0
-gpart destory -F ada1
+gpart destroy -F ada0
+gpart destroy -F ada1
 gpart create -s gpt ada0
 gpart create -s gpt ada1
 gpart add -a 4k -s 128k -t freebsd-boot ada0
