@@ -25,7 +25,7 @@ zfs create -V 1GB -o org.freebsd:swap=on -o checksum=off system/swap
 
 (5) Create appropriate filesystems (feel free to improvise!).
 zfs create -p -o mountpoint=none system/ROOT
-zfs create -o mountpoint=legacy system/ROOT/default
+zfs create -o mountpoint=/mnt system/ROOT/default
 zfs create -p system/usr/local/etc
 zfs create system/usr/home
 zfs create -o compression=on system/usr/ports
