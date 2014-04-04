@@ -17,7 +17,7 @@ mdmfs -s 1m md /boot/zfs
 
 (3) Далее создаем пулы: один для системы, второй - для данных.
 zpool create -O atime=off -O mountpoint=none system mirror /dev/gpt/system*
-zpool create -O atime=off -O mountpoint=legacy data mirror /dev/gpt/data*
+zpool create -O atime=off -O mountpoint=none data mirror /dev/gpt/data*
 zpool set bootfs=system/ROOT/default system
 
 (4)Создаем файл подкачки, подключаем его и отключаем проверку контрольных сумм
