@@ -20,10 +20,10 @@ zpool create -O atime=off -O mountpoint=none system mirror /dev/gpt/system*
 zpool create -O atime=off -O mountpoint=none data mirror /dev/gpt/data*
 zpool set bootfs=system/ROOT/default system
 
-(4)Создаем файл подкачки, подключаем его и отключаем проверку контрольных сумм
+(4) Создаем файл подкачки
 zfs create -V 1GB -o org.freebsd:swap=on -o checksum=off system/swap
 
-(5) Create appropriate filesystems (feel free to improvise!).
+(5) Создаем структуру файловой системы и монтируем для последующей установки
 zfs create -p -o mountpoint=none system/ROOT
 zfs create -o mountpoint=/mnt system/ROOT/default
 zfs create -o mountpoint=/mnt/usr system/usr
@@ -63,7 +63,7 @@ setenv LANG ru_RU.UTF-8
 passwd root
 tzsetup
 
-(9) Unmount everything and fix mountpoints for system boot.
+(9) Размонтируем все фаукловые системы и исправим точки монтирования
 zfs umount -af
 zfs set mountpoint=/ system/ROOT/default
 zfs set mountpoint=/usr system/usr
