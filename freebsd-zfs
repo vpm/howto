@@ -38,7 +38,6 @@ zfs create system/var/crash
 zfs create system/var/db
 zfs create system/var/log
 zfs create system/var/tmp
-zfs create system/tmp
 
 (6) Распаковываем систему
 cd /usr/freebsd-dist
