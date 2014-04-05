@@ -21,7 +21,7 @@ zpool create -O atime=off -O mountpoint=none data mirror /dev/gpt/data*
 zpool set bootfs=system/ROOT/default system
 
 (4) Создаем файл подкачки
-zfs create -V 1GB -o org.freebsd:swap=on -o checksum=off system/swap
+zfs create -V 2GB -o org.freebsd:swap=on -o checksum=off system/swap
 
 (5) Создаем структуру файловой системы и монтируем для последующей установки
 zfs create -p -o mountpoint=none system/ROOT
