@@ -63,7 +63,7 @@ setenv LANG ru_RU.UTF-8
 passwd root
 tzsetup
 
-(9) Размонтируем все фаукловые системы и исправим точки монтирования
+(9) Размонтируем все файловые системы и исправим точки монтирования
 zfs umount -af
 zfs set mountpoint=/ system/ROOT/default
 zfs set mountpoint=/usr system/usr
