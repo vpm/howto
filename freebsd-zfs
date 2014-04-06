@@ -50,18 +50,12 @@ cp /boot/zfs/zpool.cache /mnt/boot/zfs/
 
 (8) Настраиваем будущую систему
 chroot /mnt
-
-ee /etc/rc.conf 
-zfs_enable="YES"
-
-ee /boot/loader.conf 
-zfs_load="YES"
-
-ee /etc/csh.cshrc
-setenv LANG ru_RU.UTF-8
-
 passwd root
 tzsetup
+
+echo 'zfs_enable="YES"' >> /etc/rc.conf 
+echo 'zfs_load="YES"' >> /boot/loader.conf 
+echo 'setenv LANG ru_RU.UTF-8' >> /etc/csh.cshrc
 
 (9) Размонтируем все файловые системы и исправим точки монтирования
 zfs umount -af
