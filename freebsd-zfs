@@ -44,19 +44,19 @@ cat base.txz | tar --unlink -xpJf - -C /mnt/
 cat kernel.txz | tar --unlink -xpJf - -C /mnt/
 cat lib32.txz | tar --unlink -xpJf - -C /mnt/
 
-(7) Далее необходимо скопировать кеш zpool-а в установленную систему
+(7) Задаем точку загрузки
+zpool set bootfs=system/ROOT/default system
+
+(8) Далее необходимо скопировать кеш zpool-а в установленную систему
 cp /boot/zfs/zpool.cache /mnt/boot/zfs/
 
-(8) Настраиваем будущую систему
+(9) Настраиваем будущую систему
 chroot /mnt
 passwd root
 tzsetup
 echo 'zfs_enable="YES"' > /etc/rc.conf 
 echo 'zfs_load="YES"' > /boot/loader.conf 
 echo 'setenv LANG ru_RU.UTF-8' > /etc/csh.cshrc
-
-(9) Задаем точку загрузки
-zpool set bootfs=system/ROOT/default system
 
 (10) Размонтируем все файловые системы и исправим точки монтирования
 zfs umount -af
