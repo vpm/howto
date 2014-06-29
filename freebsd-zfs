@@ -18,7 +18,6 @@ mdmfs -s 1m md /boot/zfs
 (3) Далее создаем пулы: один для системы, второй - для данных.
 zpool create -O atime=off -O mountpoint=none system mirror /dev/gpt/system*
 zpool create -O atime=off -O mountpoint=none data mirror /dev/gpt/data*
-zpool set bootfs=system/ROOT/default system
 
 (4) Создаем файл подкачки
 zfs create -V 2GB -o org.freebsd:swap=on -o checksum=off system/swap
@@ -52,12 +51,14 @@ cp /boot/zfs/zpool.cache /mnt/boot/zfs/
 chroot /mnt
 passwd root
 tzsetup
-
 echo 'zfs_enable="YES"' > /etc/rc.conf 
 echo 'zfs_load="YES"' > /boot/loader.conf 
 echo 'setenv LANG ru_RU.UTF-8' > /etc/csh.cshrc
 
-(9) Размонтируем все файловые системы и исправим точки монтирования
+(9) Задаем точку загрузки
+zpool set bootfs=system/ROOT/default system
+
+(10) Размонтируем все файловые системы и исправим точки монтирования
 zfs umount -af
 zfs set mountpoint=/ system/ROOT/default
 zfs set mountpoint=/usr system/usr
