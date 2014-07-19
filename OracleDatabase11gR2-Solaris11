@@ -52,7 +52,8 @@ ndd -set /dev/udp udp_largest_anon_port 65500
 ln -fs /usr/bin/bash /bin/sh
 
 5) edit .profile
-export ORACLE_SID=baloo
+export ORACLE_HOSTNAME=solaris
+export ORACLE_SID=sid$ORACLEHOSTNAME
 export ORACLE_BASE=/u01/app/oracle
 export ORACLE_HOME=$ORACLE_BASE/product/11.2.0/dbhome_1
 export ORACLE_HOME_LISTENER=$ORACLE_HOME
