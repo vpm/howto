@@ -1,59 +1,24 @@
-1) устанавливаем зависимости
-pkg install --no-backup-be slim_install pkg://solaris/SUNWxwplt SUNWmfrun SUNWarc SUNWhea SUNWlibm
+*) При установке операицонной системы 
+Between 1 GB and 2 GB 1.5 times the size of the RAM
+Between 2 GB and 16 GB Equal to the size of the RAM
+More than 16 GB 16 GB
 
-*) Разрешаем любые пароли:
-/etc/default/passwd
-MINUPPER=0
-MINLOWER=0
-MINSPECIAL=0
-
-*) Самый простой способ создать зеркало , это проинсталировать систему на
-каждый диск отдельно, учитывая, что диски идентичны, разбиты они тоже будут
-одинаково. Потом добавляем второй диск в зеркало
-
-zpool attach -f rpool c7t0d0 c7t1d0
-
-Включаем xdmcp:
-/etc/gdm/custom.conf to include:
-
+1) Включаем xdmcp. Добавляем в /etc/gdm/custom.conf
 [xdmcp]
 Enable=true
 
-3) Добавляем размер swap (своп должен быть не меньше оперативки, иначе оракл просто не установится
-zfs set volsize=16G rpool/swap
-zfs set checksum=off rpool/swap
+2) Устанавливаем зависимости. Для Oracle Linux это просто
+yum install oracle-rdbms-server-11gR2-preinstall
 
-5) В файле /etc/auto_home перед строкой +auto_home надо добавить
-oracle localhost:/export/home/oracle
-
-groupadd -g 501 oinstall
-groupadd -g 502 dba
-groupadd -g 503 oper
-useradd -u 501 -g oinstall -G dba,oper -m oracle
-
+3) Задаем пароль для пользователя oracle
 passwd -r files oracle
 
-4) Подготавливаем раздел под снапшоты
-zfs create -o mountpoint=/u01 rpool/u01
-zfs create -p -o compression=on rpool/u01/app/oracle/fast_recovery_area
+4) Создаем директория, в которую будет установлен Oracle
 chown -R oracle:oinstall /u01/app/
 chmod -R 775 /u01/app/
 
-projadd -U oracle -K "project.max-shm-memory=(priv,14G,deny)" user.oracle
-projmod -sK "project.max-sem-nsems=(priv,512,deny)" user.oracle
-projmod -sK "project.max-sem-ids=(priv,128,deny)" user.oracle
-projmod -sK "project.max-shm-ids=(priv,128,deny)" user.oracle
-
-ndd -set /dev/tcp tcp_smallest_anon_port 9000
-ndd -set /dev/tcp tcp_largest_anon_port 65500
-ndd -set /dev/udp udp_smallest_anon_port 9000
-ndd -set /dev/udp udp_largest_anon_port 65500
-
-ln -fs /usr/bin/bash /bin/sh
-
-5) edit .profile
-export ORACLE_HOSTNAME=solaris
-export ORACLE_SID=sid$ORACLEHOSTNAME
+5) edit .bashrc
+export ORACLE_SID=ORAOL6
 export ORACLE_BASE=/u01/app/oracle
 export ORACLE_HOME=$ORACLE_BASE/product/11.2.0/dbhome_1
 export ORACLE_HOME_LISTNER=$ORACLE_HOME
@@ -61,11 +26,12 @@ export ORACLE_UNQNAME=$ORACLE_SID
 export LD_LIBRARY_PATH=$ORACLE_HOME/lib
 export PATH=$PATH:/usr/bin:$ORACLE_HOME/bin
 
+6) 
 /u01/app/oraInventory/orainstRoot.sh
 /u01/app/oracle/product/11.2.0/dbhome_1/root.sh
 
 edit /var/opt/oracle/oratab
-itko:/u01/app/oracle/product/11.2.0/dbhome_1:Y
+ORAOL6:/u01/app/oracle/product/11.2.0/dbhome_1:Y
 
 dbstart $ORACLE_HOME
 emctl start dbconsole
