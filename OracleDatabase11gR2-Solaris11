@@ -18,7 +18,7 @@ chown -R oracle:oinstall /u01/app/
 chmod -R 775 /u01/app/
 
 4) edit .bashrc
-export ORACLE_SID=ORAOL6
+export ORACLE_SID=OL6ORA
 export ORACLE_BASE=/u01/app/oracle
 export ORACLE_HOME=$ORACLE_BASE/product/11.2.0/dbhome_1
 export ORACLE_HOME_LISTNER=$ORACLE_HOME
