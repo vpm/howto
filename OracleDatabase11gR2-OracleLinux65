@@ -30,7 +30,7 @@ PATH=$PATH:/usr/bin:$ORACLE_HOME/bin; export PATH
 /u01/app/oraInventory/orainstRoot.sh
 /u01/app/oracle/product/11.2.0/dbhome_1/root.sh
 
-6) В /var/opt/oracle/oratab включаем запуск базы
+6) В /etc/oratab включаем запуск базы
 OL6ORCL:/u01/app/oracle/product/11.2.0/dbhome_1:Y
 
 *) Запустить-остановить базу
