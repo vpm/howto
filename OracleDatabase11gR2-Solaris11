@@ -1,23 +1,23 @@
-*) При установке операицонной системы 
+*) При установке операционной системы следует выбрать правильный размер swap-а
 Between 1 GB and 2 GB 1.5 times the size of the RAM
 Between 2 GB and 16 GB Equal to the size of the RAM
 More than 16 GB 16 GB
 
-1) Включаем xdmcp. Добавляем в /etc/gdm/custom.conf
+*) Включаем xdmcp. Добавляем в /etc/gdm/custom.conf
 [xdmcp]
 Enable=true
 
-2) Устанавливаем зависимости. Для Oracle Linux это просто
+1) Устанавливаем зависимости. Для Oracle Linux это просто
 yum install oracle-rdbms-server-11gR2-preinstall
 
-3) Задаем пароль для пользователя oracle
+2) Задаем пароль для пользователя oracle
 passwd -r files oracle
 
-4) Создаем директория, в которую будет установлен Oracle
+3) Создаем директория, в которую будет установлен Oracle
 chown -R oracle:oinstall /u01/app/
 chmod -R 775 /u01/app/
 
-5) edit .bashrc
+4) edit .bashrc
 export ORACLE_SID=ORAOL6
 export ORACLE_BASE=/u01/app/oracle
 export ORACLE_HOME=$ORACLE_BASE/product/11.2.0/dbhome_1
@@ -26,13 +26,14 @@ export ORACLE_UNQNAME=$ORACLE_SID
 export LD_LIBRARY_PATH=$ORACLE_HOME/lib
 export PATH=$PATH:/usr/bin:$ORACLE_HOME/bin
 
-6) 
+5) Выполняем скрипты после установки Oracle
 /u01/app/oraInventory/orainstRoot.sh
 /u01/app/oracle/product/11.2.0/dbhome_1/root.sh
 
-edit /var/opt/oracle/oratab
+6) В /var/opt/oracle/oratab включаем запуск базы
 ORAOL6:/u01/app/oracle/product/11.2.0/dbhome_1:Y
 
+*) Запустить-остановить базу
 dbstart $ORACLE_HOME
 emctl start dbconsole
 
