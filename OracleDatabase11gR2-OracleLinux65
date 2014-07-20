@@ -18,7 +18,7 @@ chown -R oracle:oinstall /u01/app/
 chmod -R 775 /u01/app/
 
 4) edit .bashrc
-ORACLE_SID=orcl; export ORACLE_SID
+ORACLE_SID=OL6ORCL; export ORACLE_SID
 ORACLE_BASE=/u01/app/oracle; export ORACLE_BASE
 ORACLE_HOME=$ORACLE_BASE/product/11.2.0/dbhome_1; export ORACLE_HOME
 ORACLE_HOME_LISTNER=$ORACLE_HOME; export ORACLE_HOME_LISTNER
@@ -31,7 +31,7 @@ PATH=$PATH:/usr/bin:$ORACLE_HOME/bin; export PATH
 /u01/app/oracle/product/11.2.0/dbhome_1/root.sh
 
 6) В /var/opt/oracle/oratab включаем запуск базы
-ORAOL6:/u01/app/oracle/product/11.2.0/dbhome_1:Y
+OL6ORCL:/u01/app/oracle/product/11.2.0/dbhome_1:Y
 
 *) Запустить-остановить базу
 dbstart $ORACLE_HOME
