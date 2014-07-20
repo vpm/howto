@@ -11,7 +11,7 @@ Enable=true
 yum install oracle-rdbms-server-11gR2-preinstall
 
 2) Задаем пароль для пользователя oracle
-passwd -r files oracle
+passwd oracle
 
 3) Создаем директория, в которую будет установлен Oracle
 chown -R oracle:oinstall /u01/app/
