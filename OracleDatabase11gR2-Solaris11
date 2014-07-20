@@ -1,7 +1,7 @@
 *) При установке операционной системы следует выбрать правильный размер swap-а
-Between 1 GB and 2 GB 1.5 times the size of the RAM
-Between 2 GB and 16 GB Equal to the size of the RAM
-More than 16 GB 16 GB
+1GB < RAM < 2GB ; swap = RAM*1.5
+2GB < RAM < 16GB ; swap = RAM
+16GB <= RAM ; swap = 16 GB
 
 *) Включаем xdmcp. Добавляем в /etc/gdm/custom.conf
 [xdmcp]
