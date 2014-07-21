@@ -37,5 +37,5 @@ OL6ORCL:/u01/app/oracle/product/11.2.0/dbhome_1:Y
 dbstart $ORACLE_HOME
 emctl start dbconsole
 
-dbshut $ORACLE_HOME
 emctl stop dbconsole
+dbshut $ORACLE_HOME
