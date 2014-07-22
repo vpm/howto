@@ -14,6 +14,7 @@ yum install oracle-rdbms-server-11gR2-preinstall
 passwd oracle
 
 3) Создаем директория, в которую будет установлен Oracle
+mkdir -p /u01/app/
 chown -R oracle:oinstall /u01/app/
 chmod -R 775 /u01/app/
 
