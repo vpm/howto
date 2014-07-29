@@ -9,19 +9,22 @@ ORACLE_OWNER=oracle
 ORACLE_HOME=/u01/app/oracle/product/11.2.0/dbhome_1
 
 lockfile=${LOCKFILE-/var/lock/subsys/oradb}
-
 RETVAL=0
 
 case "$1" in
     start)
         runuser - $ORACLE_OWNER -c "dbstart $ORACLE_HOME"
         runuser - $ORACLE_OWNER -c "emctl start dbconsole"
-        touch ${lockfile}
+        RETVAL=$?
+        [ $RETVAL = 0 ] && touch ${lockfile}
+        return $RETVAL
         ;;
     stop)
         runuser - $ORACLE_OWNER -c "emctl stop dbconsole"
         runuser - $ORACLE_OWNER -c "dbshut $ORACLE_HOME"
-        rm -f ${lockfile}
+        RETVAL=$?
+        [ $RETVAL = 0 ] && rm -f ${lockfile}
+        return $RETVAL
         ;;
     restart|reload)
         $0 stop
