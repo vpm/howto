@@ -6,24 +6,18 @@
 
 ORACLE_OWNER=oracle
 ORACLE_HOME=/u01/app/oracle/product/11.2.0/dbhome_1
-
-lockfile=${LOCKFILE-/var/lock/subsys/oradb}
-RETVAL=0
+ORACLE_LOCKFILE=${LOCKFILE-/var/lock/subsys/oradb}
 
 case "$1" in
     start)
         runuser - $ORACLE_OWNER -c "dbstart $ORACLE_HOME"
         runuser - $ORACLE_OWNER -c "emctl start dbconsole"
-        RETVAL=$?
-        [ $RETVAL = 0 ] && touch ${lockfile}
-        return $RETVAL
+        touch ${ORACLE_LOCKFILE}
         ;;
     stop)
         runuser - $ORACLE_OWNER -c "emctl stop dbconsole"
         runuser - $ORACLE_OWNER -c "dbshut $ORACLE_HOME"
-        RETVAL=$?
-        [ $RETVAL = 0 ] && rm -f ${lockfile}
-        return $RETVAL
+        rm -f ${ORACLE_LOCKFILE}
         ;;
     restart|reload)
         $0 stop
@@ -33,6 +27,5 @@ case "$1" in
 
     *)
         echo $"Usage: $0 {start|stop|restart|reload}"
-        RETVAL=1
 esac
 exit $RETVAL
