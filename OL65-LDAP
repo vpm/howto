@@ -1,4 +1,4 @@
-authconfig-tui
+1) authconfig-tui
 
 Задаем использование LDAP
 ┌────────────────────┤ Конфигурация аутентификации ├─────────────────────┐
@@ -31,3 +31,7 @@ authconfig-tui
 │                                                      │
 │                                                      │
 └──────────────────────────────────────────────────────┘
+2) Исправляем /etc/nsswitch.conf
+passwd:     files ldap
+shadow:     files ldap
+group:      files ldap
