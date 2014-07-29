@@ -16,12 +16,12 @@ case "$1" in
     start)
         runuser - $ORACLE_OWNER -c "dbstart $ORACLE_HOME"
         runuser - $ORACLE_OWNER -c "emctl start dbconsole"
-        touch /var/lock/subsys/oradb
+        touch ${lockfile}
         ;;
     stop)
         runuser - $ORACLE_OWNER -c "emctl stop dbconsole"
         runuser - $ORACLE_OWNER -c "dbshut $ORACLE_HOME"
-        rm -f /var/lock/subsys/oradb
+        rm -f ${lockfile}
         ;;
     restart|reload)
         $0 stop
