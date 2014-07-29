@@ -1,3 +1,5 @@
+*) устанавливаем необходимые пакеты 
+yum install openldap-servers openldap-clients pam_ldap nss-pam-ldapd
 1) authconfig-tui
 
 Задаем использование LDAP
