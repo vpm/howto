@@ -7,6 +7,10 @@
 
 ORACLE_OWNER=oracle
 ORACLE_HOME=/u01/app/oracle/product/11.2.0/dbhome_1
+
+lockfile=${LOCKFILE-/var/lock/subsys/oradb}
+pidfile=${PIDFILE-/var/run/oradb.pid}
+
 RETVAL=0
 
 case "$1" in
