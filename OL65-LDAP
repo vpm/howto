@@ -1,5 +1,6 @@
 *) устанавливаем необходимые пакеты 
 yum install openldap-servers openldap-clients pam_ldap nss-pam-ldapd
+
 1) authconfig-tui
 
 Задаем использование LDAP
@@ -37,3 +38,7 @@ yum install openldap-servers openldap-clients pam_ldap nss-pam-ldapd
 passwd:     files ldap
 shadow:     files ldap
 group:      files ldap
+
+*) Проверяем, видит ли система пользователей из LDAP
+id sysadmin
+uid=10073(sysadmin) gid=10000(smbUsers) группы=11001(domainUsers),10000(smbUsers)
