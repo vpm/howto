@@ -58,7 +58,7 @@ echo 'zfs_enable="YES"' > /etc/rc.conf
 echo 'zfs_load="YES"' > /boot/loader.conf 
 echo 'setenv LANG ru_RU.UTF-8' > /etc/csh.cshrc
 
-(10) Размонтируем все файловые системы и исправим точки монтирования
+(10) Размонтируем все файловые системы и задаем точки монтирования
 zfs umount -af
 zfs set mountpoint=/ system/ROOT/default
 zfs set mountpoint=/usr system/usr
