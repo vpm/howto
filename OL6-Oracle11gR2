@@ -1,4 +1,4 @@
-Установка Oracle Database 11gR2 на Oracle Linux 6.5
+Установка Oracle Database 11gR2 на Oracle Linux 6
 
 *) При установке операционной системы следует выбрать правильный размер swap-а
 1GB < RAM < 2GB ; swap = RAM*1.5
