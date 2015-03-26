@@ -9,6 +9,8 @@
 [xdmcp]
 Enable=true
 
+*) отключить selinux
+
 1) Устанавливаем зависимости. Для Oracle Linux это просто
 yum install oracle-rdbms-server-11gR2-preinstall
 
