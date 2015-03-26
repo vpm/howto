@@ -13,7 +13,7 @@ Enable=true
 sed -i s/SELINUX=enforcing/SELINUX=disabled/g /etc/selinux/config
 
 1) Устанавливаем зависимости. Для Oracle Linux это просто
-yum install oracle-rdbms-server-11gR2-preinstall
+yum install oracle-rdbms-server-11gR2-preinstall elfutils-libelf-devel
 
 2) Задаем пароль для пользователя oracle
 passwd oracle
