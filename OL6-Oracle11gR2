@@ -39,7 +39,7 @@ Search for the line: $(MK_EMAGENT_NMECTL)
 Change it to: $(MK_EMAGENT_NMECTL) -lnnz11
 
 or su - oracle
-sed -i s/(MK_EMAGENT_NMECTL)/(MK_EMAGENT_NMECTL) -lnnz11/g $ORACLE_HOME/sysman/lib/ins_emagent.mk
+sed -i s/'(MK_EMAGENT_NMECTL)'/'(MK_EMAGENT_NMECTL) -lnnz11'/g $ORACLE_HOME/sysman/lib/ins_emagent.mk
 
 5) Выполняем скрипты после установки Oracle
 /u01/app/oraInventory/orainstRoot.sh
