@@ -10,6 +10,7 @@
 Enable=true
 
 *) отключить selinux
+sed -i s/SELINUX=enforcing/SELINUX=disabled/g /etc/selinux/config
 
 1) Устанавливаем зависимости. Для Oracle Linux это просто
 yum install oracle-rdbms-server-11gR2-preinstall
