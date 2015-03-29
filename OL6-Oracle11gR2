@@ -24,7 +24,6 @@ chown -R oracle:oinstall /u01/app/
 chmod -R 775 /u01/app/
 
 4) Правим /home/oracle/.bash_profile
-NLS_LANG=RUSSIAN_CIS.UTF8; export NLS_LANG
 ORACLE_SID=OL6ORCL; export ORACLE_SID
 ORACLE_BASE=/u01/app/oracle; export ORACLE_BASE
 ORACLE_HOME=$ORACLE_BASE/product/11.2.0/dbhome_1; export ORACLE_HOME
