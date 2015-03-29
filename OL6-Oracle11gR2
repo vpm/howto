@@ -33,11 +33,8 @@ LD_LIBRARY_PATH=$ORACLE_HOME/lib; export LD_LIBRARY_PATH
 PATH=$PATH:/usr/bin:$ORACLE_HOME/bin; export PATH
 
 *) Error in invoking target 'agent nmhs' of makefile....
-vi $ORACLE_HOME/sysman/lib/ins_emagent.mk
-Search for the line: $(MK_EMAGENT_NMECTL)
-Change it to: $(MK_EMAGENT_NMECTL) -lnnz11
+open $ORACLE_HOME/sysman/lib/ins_emagent.mk , change $(MK_EMAGENT_NMECTL) to $(MK_EMAGENT_NMECTL) -lnnz11
 
-sed -i s/'(MK_EMAGENT_NMECTL)'/'(MK_EMAGENT_NMECTL) -lnnz11'/g /u01/app/oracle/product/11.2.0/dbhome_1/sysman/lib/ins_emagent.mk
 sed -i 's/^\(\s*\$(MK_EMAGENT_NMECTL)\)\s*$/\1 -lnnz11/g' $ORACLE_HOME/sysman/lib/ins_emagent.mk
 
 5) Выполняем скрипты после установки Oracle
