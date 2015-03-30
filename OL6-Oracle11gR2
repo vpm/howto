@@ -35,7 +35,6 @@ PATH=$PATH:/usr/bin:$ORACLE_HOME/bin; export PATH
 
 *) Error in invoking target 'agent nmhs' of makefile...
 sed -i 's/^\(\s*\$(MK_EMAGENT_NMECTL)\)\s*$/\1 -lnnz11/g' $ORACLE_HOME/sysman/lib/ins_emagent.mk
-Ошибка происходит из-за не FQDN имени инстанса оракла.
 
 5) Выполняем скрипты после установки Oracle
 /u01/app/oraInventory/orainstRoot.sh
