@@ -1,1 +1,2 @@
-yum install php-pecl-imagick
+yum install php-pecl-imagick libmongo-client
+
