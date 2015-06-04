@@ -8,6 +8,9 @@
 *) Включаем xdmcp. Добавляем в /etc/gdm/custom.conf
 [xdmcp]
 Enable=true
+[greeter]
+Exclude=oracle
+
 
 *) отключить selinux
 sed -i s/SELINUX=enforcing/SELINUX=disabled/g /etc/selinux/config
