@@ -8,9 +8,10 @@
 *) Включаем xdmcp. Добавляем в /etc/gdm/custom.conf
 [xdmcp]
 Enable=true
+
+*) Убираем логин пользователя оракла с экрана логина, добавляем в /etc/gdm/custom.conf
 [greeter]
 Exclude=oracle
-
 
 *) отключить selinux
 sed -i s/SELINUX=enforcing/SELINUX=disabled/g /etc/selinux/config
@@ -43,8 +44,14 @@ sed -i 's/^\(\s*\$(MK_EMAGENT_NMECTL)\)\s*$/\1 -lnnz11/g' $ORACLE_HOME/sysman/li
 /u01/app/oraInventory/orainstRoot.sh
 /u01/app/oracle/product/11.2.0/dbhome_1/root.sh
 
-6) В /etc/oratab включаем запуск базы
-ORCL:/u01/app/oracle/product/11.2.0/dbhome_1:Y
+6) Создаем листенер
+netca
+
+7) Создаем инстанс оракла
+dbca
+
+6) В /etc/oratab включаем запуск инстанса оракла
+baloo:/u01/app/oracle/product/11.2.0/dbhome_1:Y
 
 *) Запустить-остановить базу. От пользователя oracle ( su - oracle ) 
 dbstart $ORACLE_HOME
