@@ -45,7 +45,7 @@ sed -i 's/^\(\s*\$(MK_EMAGENT_NMECTL)\)\s*$/\1 -lnnz11/g' $ORACLE_HOME/sysman/li
 /u01/app/oracle/product/11.2.0/dbhome_1/root.sh
 
 6) Создаем листенер
-netca
+netca -instype typical
 
 7) Создаем инстанс оракла
 dbca
