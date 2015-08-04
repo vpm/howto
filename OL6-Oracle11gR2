@@ -61,7 +61,6 @@ DECLINE_SECURITY_UPDATES=true
 netca -instype typical
 
 7) Создаем инстанс оракла
-dbca
 dbca -silent -createDatabase -templateName General_Purpose.dbc -gdbname `hostname` -sid `hostname -s` -sysPassword cfvjktn -systemPassword cfvjktn -responseFile NO_VALUE -emConfiguration LOCAL -dbsnmpPassword cfvjktn -sysmanPassword cfvjktn -hostUserName oracle -hostUserPassword cfvjktn -initParams nls_territory=RUSSIA -databaseType MULTIPURPOSE
 
 1) создать TABLESPACE
