@@ -40,6 +40,19 @@ PATH=$PATH:/usr/bin:$ORACLE_HOME/bin; export PATH
 *) Error in invoking target 'agent nmhs' of makefile...
 sed -i 's/^\(\s*\$(MK_EMAGENT_NMECTL)\)\s*$/\1 -lnnz11/g' $ORACLE_HOME/sysman/lib/ins_emagent.mk
 
+5) устанавливаем оракл
+./runInstaller -silent -showProgress \
+oracle.install.option=INSTALL_DB_SWONLY \
+UNIX_GROUP_NAME=oinstall \
+INVENTORY_LOCATION=$ORACLE_BASE/oraInventory \
+SELECTED_LANGUAGES=en,ru,uk \
+ORACLE_HOME=$ORACLE_HOME \
+ORACLE_BASE=$ORACLE_BASE \
+oracle.install.db.InstallEdition=EE \
+oracle.install.db.EEOptionsSelection=false \
+oracle.install.db.DBA_GROUP=dba \
+DECLINE_SECURITY_UPDATES=true
+
 5) Выполняем скрипты после установки Oracle
 /u01/app/oraInventory/orainstRoot.sh
 /u01/app/oracle/product/11.2.0/dbhome_1/root.sh
@@ -49,6 +62,121 @@ netca -instype typical
 
 7) Создаем инстанс оракла
 dbca
+dbca -silent -createDatabase -templateName General_Purpose.dbc -gdbname `hostname` -sid `hostname -s` -sysPassword cfvjktn -systemPassword cfvjktn -responseFile NO_VALUE -emConfiguration LOCAL -dbsnmpPassword cfvjktn -sysmanPassword cfvjktn -hostUserName oracle -hostUserPassword cfvjktn -initParams nls_territory=RUSSIA -databaseType MULTIPURPOSE
+
+1) создать TABLESPACE
+Database -> Server -> Tablespaces
+
+Create
+NAME : ITKO
+Datafiles: ADD
+Filename: itko.dbf
+Automatically extend datafile when full (AUTOEXTEND)
+Increment	100 MB
+
+2) Импортировать Schema
+Database -> Data Movement -> Import from Export Files
+
+Import Type - Schema
+
+Задать Host Credentials (oracle cfvjktn)
+
+Import: Schemas -> Add : ITKO
+
+# установка lam, из него нужна dhcp.schema для openldap-а
+yum install --nogpgcheck http://garr.dl.sourceforge.net/project/lam/LAM/5.0/ldap-account-manager-5.0-0.fedora.1.noarch.rpm
+
+# установить sssd
+yum -y install sssd openldap-servers 
+
+# 
+authconfig --enableldap --enableldapauth --ldapserver=127.0.0.1 --ldapbasedn="dc=lk" --updateall
+
+# configure openldap.
+
+rm -rf /etc/openldap/slapd.d/
+
+/etc/openldap/slapd.conf
+include /etc/openldap/schema/core.schema
+include /etc/openldap/schema/cosine.schema
+include /etc/openldap/schema/inetorgperson.schema
+include /etc/openldap/schema/nis.schema
+include /etc/openldap/schema/misc.schema
+include /etc/openldap/schema/samba.schema
+include /usr/share/ldap-account-manager/docs/schema/dhcp.schema
+
+modulepath /usr/lib64/openldap
+moduleload back_bdb.la
+moduleload syncprov.la
+
+pidfile     /var/run/openldap/slapd.pid
+argsfile    /var/run/openldap/slapd.args
+
+database    bdb
+suffix      "dc=lk"
+directory   /var/lib/ldap
+rootdn      "cn=sysadmin,dc=lk"
+rootpw      {SSHA}oOSTcW59IklR+T92Xo59c579c8J3t2Vv
+
+syncrepl      rid=001
+              provider=ldap://10.0.5.60
+              type=refreshAndPersist
+              binddn="cn=sysadmin,dc=lk"
+              credentials=sadeport
+              searchbase="dc=lk"
+              retry="60 10 300 +"
+
+updateref   ldap://10.0.5.60
+
+# Configure samba. /etc/samba/smb.conf
+
+[global]
+load printers = no
+syslog only = yes
+
+workgroup = lk
+server string = ""
+interfaces = eth0
+bind interfaces only = Yes
+admin users = @domainAdmins
+
+passdb backend = ldapsam:ldap://localhost/
+ldap suffix = dc=lk
+ldap user suffix = ou=smbUsers
+ldap group suffix = ou=smbGroups
+ldap machine suffix = ou=smbHosts
+ldap admin dn = cn=sysadmin,dc=lk
+ldap ssl = off
+
+time server = Yes
+
+os level = 0
+domain logons = Yes
+domain master = No
+
+;; logon patch
+logon home =
+logon path =
+
+;;; default shares configuration
+hide files = /desktop.ini/Thumbs.db/WINDOWS/
+create mask = 0664
+delete readonly = yes
+directory mode = 775
+read only = no
+
+[baloo]
+    path = /u01/samba/baloo
+    valid users = @domainITUsers
+    dont descend = itko/etl,itko/prnt,itko/prnt.net,itko/web,itko/_readmy,itko/netnsi,itko/qrepw,itko/sysdbf,itko/upgrade,itk
+
+[baloo-ITAdmins]
+    path = /u01/samba/baloo
+    valid users = @domainITAdmins
+    force group = @domainITUsers
+
+# smbpasswd -w sadeport
+
 
 6) В /etc/oratab включаем запуск инстанса оракла
 baloo:/u01/app/oracle/product/11.2.0/dbhome_1:Y
