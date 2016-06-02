@@ -1,0 +1,4 @@
+fetch "https://svnweb.freebsd.org/base/stable/10/bin/csh/config_p.h?revision=297789&view=co&pathrev=297789" -o /usr/src/bin/csh/config_p.h
+cd /usr/src/bin/csh/
+make
+make install
