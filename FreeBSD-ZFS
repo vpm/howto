@@ -23,20 +23,20 @@ zpool create -O atime=off -O mountpoint=none data mirror /dev/gpt/data*
 zfs create -V 8GB -o org.freebsd:swap=on -o checksum=off system/swap
 
 (5) Создаем структуру файловой системы и монтируем для последующей установки
+zfs create -p system/usr/local/etc
+zfs create system/usr/home
 zfs create system/ROOT
 zfs create -o mountpoint=/mnt system/ROOT/default
 zfs create -o mountpoint=/mnt/usr system/usr
 zfs create -o mountpoint=/mnt/var system/var
 zfs create -o mountpoint=/mnt/tmp system/tmp
-zfs create -p system/usr/local/etc
-zfs create system/usr/home
-zfs create -o compression=on system/usr/ports
-zfs create -o compression=on system/usr/src
 zfs create system/var/empty
 zfs create system/var/crash
 zfs create system/var/db
 zfs create system/var/log
 zfs create system/var/tmp
+zfs create -o compression=on system/usr/ports
+zfs create -o compression=on system/usr/src
 
 (6) Распаковываем систему
 cd /usr/freebsd-dist
