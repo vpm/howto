@@ -23,14 +23,12 @@ zpool create -O atime=off -O mountpoint=none data mirror /dev/diskid/DISK-p3*
 zfs create -V 8GB -o org.freebsd:swap=on -o checksum=off system/swap
 
 (5) Создаем структуру файловой системы и монтируем для последующей установки
-zfs create system/ROOT
-zfs create -o mountpoint=/mnt system/ROOT/default
+zfs create -p -o mountpoint=/mnt system/ROOT/default
 zfs create -o mountpoint=/mnt/usr system/usr
 zfs create -o mountpoint=/mnt/var system/var
-zfs create -o mountpoint=/mnt/tmp system/tmp
-zfs create -p system/usr/local/etc
 zfs create -o compression=on system/usr/ports
 zfs create -o compression=on system/usr/src
+zfs create -p system/usr/local/etc
 zfs create system/usr/home
 zfs create system/var/empty
 zfs create system/var/crash
@@ -63,5 +61,4 @@ zfs umount -af
 zfs set mountpoint=/ system/ROOT/default
 zfs set mountpoint=/usr system/usr
 zfs set mountpoint=/var system/var
-zfs set mountpoint=/tmp system/tmp
 zfs set mountpoint=/data data
