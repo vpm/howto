@@ -3,10 +3,10 @@ gpart destroy -F ada0
 gpart destroy -F ada1
 gpart create -s gpt ada0
 gpart create -s gpt ada1
-gpart add -a 4k -s 512k -t freebsd-boot ada0
-gpart add -a 4k -s 512k -t freebsd-boot ada1
-gpart add -a 4k -s 100g -t freebsd-zfs -l system0 ada0
-gpart add -a 4k -s 100g -t freebsd-zfs -l system1 ada1
+gpart add -a 4k -s 1m -t freebsd-boot ada0
+gpart add -a 4k -s 1m -t freebsd-boot ada1
+gpart add -a 4k -s 100g -t freebsd-zfs ada0
+gpart add -a 4k -s 100g -t freebsd-zfs ada1
 gpart add -a 4k -t freebsd-zfs -l data0 ada0
 gpart add -a 4k -t freebsd-zfs -l data1 ada1
 gpart bootcode -b /boot/pmbr -p /boot/gptzfsboot -i 1 ada0
@@ -16,8 +16,8 @@ gpart bootcode -b /boot/pmbr -p /boot/gptzfsboot -i 1 ada1
 mdmfs -s 1m md /boot/zfs
 
 (3) Далее создаем пулы: один для системы, второй - для данных.
-zpool create -O atime=off -O mountpoint=none system mirror /dev/gpt/system*
-zpool create -O atime=off -O mountpoint=none data mirror /dev/gpt/data*
+zpool create -O atime=off -O mountpoint=none system mirror /dev/diskid/DISK-*p2
+zpool create -O atime=off -O mountpoint=none data mirror /dev/diskid/DISK-p3*
 
 (4) Создаем файл подкачки
 zfs create -V 8GB -o org.freebsd:swap=on -o checksum=off system/swap
