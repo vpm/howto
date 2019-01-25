@@ -3,8 +3,8 @@ gpart destroy -F ada0
 gpart destroy -F ada1
 gpart create -s gpt ada0
 gpart create -s gpt ada1
-gpart add -a 4k -s 1m -t freebsd-boot ada0
-gpart add -a 4k -s 1m -t freebsd-boot ada1
+gpart add -a 4k -s 512k -t freebsd-boot ada0
+gpart add -a 4k -s 512k -t freebsd-boot ada1
 gpart add -a 4k -s 100g -t freebsd-zfs ada0
 gpart add -a 4k -s 100g -t freebsd-zfs ada1
 gpart add -a 4k -t freebsd-zfs -l data0 ada0
