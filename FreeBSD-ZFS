@@ -17,7 +17,6 @@ mdmfs -s 1m md /boot/zfs
 
 (3) Далее создаем пулы: один для системы, второй - для данных.
 zpool create -O atime=off -O mountpoint=none system mirror /dev/diskid/DISK-*p2
-zpool create -O atime=off -O mountpoint=none data mirror /dev/diskid/DISK-p3*
 
 (4) Создаем файл подкачки
 zfs create -V 8GB -o org.freebsd:swap=on -o checksum=off system/swap
@@ -61,4 +60,3 @@ zfs umount -af
 zfs set mountpoint=/ system/ROOT/default
 zfs set mountpoint=/usr system/usr
 zfs set mountpoint=/var system/var
-zfs set mountpoint=/data data
