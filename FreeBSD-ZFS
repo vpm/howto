@@ -37,7 +37,6 @@ zfs create system/var/tmp
 cd /usr/freebsd-dist
 cat base.txz | tar --unlink -xpJf - -C /mnt/
 cat kernel.txz | tar --unlink -xpJf - -C /mnt/
-cat lib32.txz | tar --unlink -xpJf - -C /mnt/
 
 (7) Задаем точку загрузки
 zpool set bootfs=system/ROOT/default system
