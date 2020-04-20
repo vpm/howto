@@ -1,0 +1,22 @@
+# required zabbix-agent > 4.4, smartmontools > 7.0, perl, nvme-cli, sg3-utils, sudo
+
+# Download and install zbx-smartctl-discovery script
+sudo wget https://raw.githubusercontent.com/v-zhuravlev/zbx-smartctl/master/discovery-scripts/nix/smartctl-disks-discovery.pl -O /usr/sbin/zbx-smartctl-discovery
+sudo chmod 755 /usr/sbin/zbx-smartctl-discovery
+
+# Create sudo
+echo 'Defaults:zabbix !requiretty' > /etc/sudoers.d/zbx-smartctl
+echo 'Cmnd_Alias SMARTCTL = /usr/sbin/smartctl' >> /etc/sudoers.d/zbx-smartctl
+echo 'Cmnd_Alias SMARTCTL_DISCOVERY = /usr/sbin/zbx-smartctl-discovery' >> /etc/sudoers.d/zbx-smartctl
+echo 'zabbix ALL= (ALL) NOPASSWD: SMARTCTL, SMARTCTL_DISCOVERY' >> /etc/sudoers.d/zbx-smartctl
+echo 'Defaults!SMARTCTL !logfile, !syslog, !pam_session' >> /etc/sudoers.d/zbx-smartctl
+echo 'Defaults!SMARTCTL_DISCOVERY !logfile, !syslog, !pam_session' >> /etc/sudoers.d/zbx-smartctl
+
+# Create zbx-smartctl.conf for zabbix_agentd 
+echo 'UserParameter=uHDD.get[*],sudo smartctl -i -H -A -l error -l background $1 || true' > /etc/zabbix/zabbix_agentd.d/zbx-smartctl.conf
+echo 'UserParameter=uSSD.get[*],sudo smartctl -i -H -A -l error -l background $1 || true' >> /etc/zabbix/zabbix_agentd.d/zbx-smartctl.conf
+echo 'UserParameter=uHDD.discovery[*],sudo /usr/sbin/zbx-smartctl-discovery $1' >> /etc/zabbix/zabbix_agentd.d/zbx-smartctl.conf
+echo 'UserParameter=uSSD.discovery[*],sudo /usr/sbin/zbx-smartctl-discovery $1' >> /etc/zabbix/zabbix_agentd.d/zbx-smartctl.conf
+
+# Template for zabbix-server
+https://github.com/v-zhuravlev/zbx-smartctl/blob/master/Template_3.4_HDD_SMARTMONTOOLS_2_WITH_LLD.xml
