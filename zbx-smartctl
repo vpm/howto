@@ -1,0 +1,4 @@
+
+sudo wget https://raw.githubusercontent.com/v-zhuravlev/zbx-smartctl/master/discovery-scripts/nix/smartctl-disks-discovery.pl -O /usr/sbin/zbx-smartctl-discovery
+sudo chmod 755 /usr/sbin/zbx-smartctl-discovery
+
