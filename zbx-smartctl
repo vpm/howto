@@ -9,4 +9,10 @@ echo 'zabbix ALL= (ALL) NOPASSWD: SMARTCTL, SMARTCTL_DISCOVERY' >> /etc/sudoers.
 echo 'Defaults!SMARTCTL !logfile, !syslog, !pam_session' >> /etc/sudoers.d/zbx-smartctl
 echo 'Defaults!SMARTCTL_DISCOVERY !logfile, !syslog, !pam_session' >> /etc/sudoers.d/zbx-smartctl
 
+
+echo 'UserParameter=uHDD.get[*],sudo smartctl -i -H -A -l error -l background $1 || true' > /etc/zabbix/zabbix_agentd.d/zbx-smartctl
+echo 'UserParameter=uSSD.get[*],sudo smartctl -i -H -A -l error -l background $1 || true' >> /etc/zabbix/zabbix_agentd.d/zbx-smartctl
+echo 'UserParameter=uHDD.discovery[*],sudo /usr/sbin/zbx-smartctl-discovery $1' >> /etc/zabbix/zabbix_agentd.d/zbx-smartctl
+echo 'UserParameter=uSSD.discovery[*],sudo /usr/sbin/zbx-smartctl-discovery $1' >> /etc/zabbix/zabbix_agentd.d/zbx-smartctl
+
 https://github.com/v-zhuravlev/zbx-smartctl/blob/master/Template_3.4_HDD_SMARTMONTOOLS_2_WITH_LLD.xml
