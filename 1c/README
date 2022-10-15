@@ -1,0 +1,1 @@
+copy 0.install.sh to directory with name of 1C version , for example 8.3.21.1508, and copy the installation file setup-full-8.3.21.1508-x86_64.run
