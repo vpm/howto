@@ -1,2 +1,4 @@
-https://www.waveshare.com/wiki/RS485_RS232_HAT
+# https://www.waveshare.com/wiki/RS485_RS232_HAT
+# RS485 RS232 HAT is an isolated RS485 and RS232 expansion board specially designed by Waveshare for Raspberry Pi.
+# It adopts SC16IS752+SP3485, SP3232 scheme, built-in power isolation, ADI magnetic coupling isolation and TVS and other protection circuits.
 
