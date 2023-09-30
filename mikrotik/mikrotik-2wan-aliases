@@ -2,14 +2,14 @@
                                                                                   (ether3 10.255.255.1) -> (eth0 10.255.255.55)
 10.200.200.1/24) -> (ether2 10.200.200.200/24; ether2-alias1 10.200.200.222/24)
 
-# Create address list for better understanding what you do
+# Create address-lists for better understanding what you do
 
 /ip firewall address-list
-add address=10.100.100.100 list=ether1
-add address=10.100.100.111 list=ether1-alias1
-add address=10.200.200.200 list=ether2
-add address=10.200.200.222 list=ether2-alias1
-add address=10.255.255.55 list=mail
-add address=10.255.255.0/24 list=LAN_NET
+add address=10.100.100.100 list=ether1         # primary wan 
+add address=10.100.100.111 list=ether1-alias1  # primary wan alias1
+add address=10.200.200.200 list=ether2         # secondary wan
+add address=10.200.200.222 list=ether2-alias1  # secondary wan alias1
+add address=10.255.255.55 list=mail            # mail server
+add address=10.255.255.0/24 list=LAN_NET       # lan network
 
 
