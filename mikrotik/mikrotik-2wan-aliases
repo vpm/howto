@@ -1,9 +1,13 @@
+# Mikrotik have 2 wan interfases (ether1, ether2) with 2 ip on each 10.100.100.100,10.100.100.111 on ether1 and 10.200.200.200, 10.200.200.222 on ether2.
+# Private network interface ether3 and ip address 10.255.255.1 netmask 255.255.255.0 , mail server has lan ip 10.255.255.55
+
+schema:
+
 10.100.100.1/24) -> (ether1 10.100.100.100/24; ether1-alias1 10.100.100.111/24)
                                                                                   (ether3 10.255.255.1) -> (eth0 10.255.255.55)
 10.200.200.1/24) -> (ether2 10.200.200.200/24; ether2-alias1 10.200.200.222/24)
 
-# Create address-lists for better understanding what you do
-
+# Create address-lists for better understanding what you do, otherwise you can easily get confused
 /ip firewall address-list
 add address=10.100.100.100 list=ether1         # primary wan ip
 add address=10.100.100.111 list=ether1-alias1  # primary wan ip alias1
@@ -12,3 +16,4 @@ add address=10.200.200.222 list=ether2-alias1  # secondary wan ip alias1
 add address=10.255.255.55 list=mail            # mail server
 add address=10.255.255.0/24 list=LAN_NET       # lan network
 
+# add 
