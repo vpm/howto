@@ -7,13 +7,25 @@ schema:
                                                                                   (ether3 10.255.255.1) -> (eth0 10.255.255.55)
 10.200.200.1/24) -> (ether2 10.200.200.200/24; ether2-alias1 10.200.200.222/24)
 
-# Create address-lists for better understanding what you do, otherwise you can easily get confused
-/ip firewall address-list
-add address=10.100.100.100 list=ether1         # primary wan ip
-add address=10.100.100.111 list=ether1-alias1  # primary wan ip alias1
-add address=10.200.200.200 list=ether2         # secondary wan ip
-add address=10.200.200.222 list=ether2-alias1  # secondary wan ip alias1
-add address=10.255.255.55 list=mail            # mail server
-add address=10.255.255.0/24 list=LAN_NET       # lan network
+# add interfaces ether1 and ether2 to WAN interface list
+/interface list member
+add interface=ether1 list=WAN
+add interface=ether2 list=WAN
 
-# add 
+#  add routing tables for all interfaces
+/routing table
+add disabled=no fib name=rtab-ether1
+add disabled=no fib name=rtab-ether2
+add disabled=no fib name=rtab-ether1-alias1
+add disabled=no fib name=rtab-ether2-alias1
+
+# first rules for incoming traffic from wan to mail-server
+/ip firewall nat
+add action=dst-nat chain=dstnat comment="smtp mail" dst-address=10.100.100.111 dst-port=25,80,443,587 in-interface=ether1 protocol=tcp to-addresses=10.255.255.55
+add action=dst-nat chain=dstnat comment="smtp mail" dst-address=10.200.200.222 dst-port=25,80,443,587 in-interface=ether2 protocol=tcp to-addresses=10.255.255.55
+add action=src-nat chain=srcnat out-interface=ether1 src-address=10.255.255.55 to-addresses=10.100.100.111
+add action=src-nat chain=srcnat out-interface=ether2 src-address=10.255.255.55 to-addresses=10.200.200.222
+
+
+add action=src-nat chain=srcnat out-interface=ether1 src-address-list=LAN_NET to-addresses=10.100.100.100
+add action=src-nat chain=srcnat out-interface=ether2 src-address-list=LAN_NET to-addresses=10.200.200.200
