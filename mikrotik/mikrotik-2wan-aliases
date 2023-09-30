@@ -5,11 +5,10 @@
 # Create address-lists for better understanding what you do
 
 /ip firewall address-list
-add address=10.100.100.100 list=ether1         # primary wan 
-add address=10.100.100.111 list=ether1-alias1  # primary wan alias1
-add address=10.200.200.200 list=ether2         # secondary wan
-add address=10.200.200.222 list=ether2-alias1  # secondary wan alias1
+add address=10.100.100.100 list=ether1         # primary wan ip
+add address=10.100.100.111 list=ether1-alias1  # primary wan ip alias1
+add address=10.200.200.200 list=ether2         # secondary wan ip
+add address=10.200.200.222 list=ether2-alias1  # secondary wan ip alias1
 add address=10.255.255.55 list=mail            # mail server
 add address=10.255.255.0/24 list=LAN_NET       # lan network
-
 
