@@ -6,17 +6,6 @@ Mikrotik have 2 wan interfases (ether1, ether2) with 2 ip on each
 Private network interface ether3 and ip address 10.255.255.1 netmask 255.255.255.0,
 mail server has lan ip 10.255.255.55
 
-```
------------------      --------------------------------------------------
-primary inet     |    |                mikrotik gateway                  |
-10.100.100.1/24) | -> | ether1 10.100.100.100/24; 10.100.100.111/24      |     -----------------------
------------------     |                                                  |    |     mail server       |
------------------     |                          ether3 10.255.255.1/24) | -> | eth0 10.255.255.55/24 |
-secondary inet   |    |                                                  |     -----------------------
-10.200.200.1/24) | -> | ether2 10.200.200.200/24; 10.200.200.222/24      |
------------------      --------------------------------------------------
-```
-
 ![Alt text](mikrotik-2wan-with-aliases-schema.png?raw=true "IP Address list")
 
 Interfaces ip configuration
