@@ -17,7 +17,7 @@ secondary inet   |    |                                                  |     -
 
 ![Alt text](mikrotik-2wan-with-aliases-schema.png?raw=true "IP Address list")
 
-interfaces ip configuration
+Interfaces ip configuration
 ```
 /ip address
 add address=10.100.100.100/24 interface=ether1 network=10.100.100.0
@@ -59,7 +59,7 @@ add action=mark-routing chain=output connection-mark=conection-ether1-alias1 new
 add action=mark-routing chain=output connection-mark=conection-ether2-alias1 new-routing-mark=rtab-ether2-alias1 passthrough=yes src-address=10.255.255.55
 ```
 
-Mark other traffic
+Mark other traffic from local network 10.255.255.0/24 via ether1 and ether2
 ```
 /ip firewall mangle
 add action=mark-connection chain=prerouting connection-mark=no-mark dst-address=10.100.100.100 in-interface=ether1 new-connection-mark=conection-ether1 passthrough=yes
