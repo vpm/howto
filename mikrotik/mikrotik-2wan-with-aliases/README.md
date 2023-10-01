@@ -32,8 +32,8 @@ Create routing table. Add route for eatch alias with distance more then default 
 /ip route
 add check-gateway=ping disabled=no distance=1 dst-address=0.0.0.0/0 gateway=10.100.100.1 pref-src="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
 add disabled=no distance=2 dst-address=0.0.0.0/0 gateway=10.200.200.1 pref-src="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
-add disabled=no distance=255 dst-address=0.0.0.0/0 gateway=10.100.100.1 pref-src=10.100.100.111 routing-table=rtab-ether1 scope=30 suppress-hw-offload=no target-scope=10
-add disabled=no distance=255 dst-address=0.0.0.0/0 gateway=10.200.200.1 pref-src=10.200.200.222 routing-table=rtab-ether2 scope=30 suppress-hw-offload=no target-scope=10
+add disabled=no distance=255 dst-address=0.0.0.0/0 gateway=10.100.100.1 pref-src=10.100.100.111 routing-table=rtab-ether1-alias1 scope=30 suppress-hw-offload=no target-scope=10
+add disabled=no distance=255 dst-address=0.0.0.0/0 gateway=10.200.200.1 pref-src=10.200.200.222 routing-table=rtab-ether2-alias1 scope=30 suppress-hw-offload=no target-scope=10
 ```
 ![Alt text](mikrotik-2wan-with-aliases-ip-route-list.png?raw=true "IP Route list")
 
