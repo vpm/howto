@@ -1,11 +1,14 @@
 # Mikrotik have 2 wan interfases (ether1, ether2) with 2 ip on each 10.100.100.100,10.100.100.111 on ether1 and 10.200.200.200, 10.200.200.222 on ether2.
 # Private network interface ether3 and ip address 10.255.255.1 netmask 255.255.255.0 , mail server has lan ip 10.255.255.55
+# 
 
-schema:
-
-10.100.100.1/24) -> (ether1 10.100.100.100/24; ether1-alias1 10.100.100.111/24)
-                                                                                  (ether3 10.255.255.1) -> (eth0 10.255.255.55)
-10.200.200.1/24) -> (ether2 10.200.200.200/24; ether2-alias1 10.200.200.222/24)
+network schema:
+                    --------------------------------------------------------------------------------------
+                    |                                mikrotik gateway                                    |
+10.100.100.1/24) -> | (ether1 10.100.100.100/24; ether1-alias1 10.100.100.111/24)                        |
+                    |                                                              (ether3 10.255.255.1) | -> (eth0 10.255.255.55)
+10.200.200.1/24) -> | (ether2 10.200.200.200/24; ether2-alias1 10.200.200.222/24)                        |
+                    --------------------------------------------------------------------------------------
 
 #  add routing tables for all interfaces
 /routing table
@@ -29,7 +32,7 @@ add action=src-nat chain=srcnat out-interface=ether2 src-address=10.255.255.55 t
 add action=src-nat chain=srcnat out-interface=ether1 src-address=10.255.255.0/24 to-addresses=10.100.100.100
 add action=src-nat chain=srcnat out-interface=ether2 src-address=10.255.255.0/24 to-addresses=10.200.200.200
 
-# route traffic via interfaces aliases 
+# mark traffic from 10.255.255.55
 /ip firewall mangle
 add action=mark-connection chain=prerouting connection-mark=no-mark dst-address=10.100.100.111 in-interface=ether1 new-connection-mark=conection-ether1-alias1 passthrough=yes
 add action=mark-connection chain=prerouting connection-mark=no-mark dst-address=10.200.200.222 in-interface=ether2 new-connection-mark=conection-ether2-alias1 passthrough=yes
@@ -38,7 +41,7 @@ add action=mark-routing chain=prerouting connection-mark=conection-ether2-alias1
 add action=mark-routing chain=output connection-mark=conection-ether1-alias1 new-routing-mark=rtab-ether1-alias1 passthrough=yes src-address=10.255.255.55
 add action=mark-routing chain=output connection-mark=conection-ether2-alias1 new-routing-mark=rtab-ether2-alias1 passthrough=yes src-address=10.255.255.55
 
-# 
+# mark other traffic
 /ip firewall mangle
 add action=mark-connection chain=prerouting connection-mark=no-mark dst-address=10.100.100.100 in-interface=ether1 new-connection-mark=conection-ether1 passthrough=yes
 add action=mark-connection chain=prerouting connection-mark=no-mark dst-address=10.200.200.200 in-interface=ether2 new-connection-mark=conection-ether2 passthrough=yes
@@ -46,4 +49,12 @@ add action=mark-routing chain=prerouting connection-mark=conection-ether1 in-int
 add action=mark-routing chain=prerouting connection-mark=conection-ether2 in-interface=!ether2 new-routing-mark=rtab-ether2 passthrough=yes
 add action=mark-routing chain=output connection-mark=conection-ether1 new-routing-mark=rtab-ether1 passthrough=yes
 add action=mark-routing chain=output connection-mark=conection-ether2 new-routing-mark=rtab-ether2 passthrough=yes
+
+# create routing table
+/ip route
+add check-gateway=ping disabled=no distance=1 dst-address=0.0.0.0/0 gateway=10.100.100.1 pref-src="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
+add disabled=no distance=2 dst-address=0.0.0.0/0 gateway=10.200.200.1 pref-src="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
+add disabled=no distance=255 dst-address=0.0.0.0/0 gateway=10.100.100.1 pref-src=10.100.100.111 routing-table=rtab-ether1 scope=30 suppress-hw-offload=no target-scope=10
+add disabled=no distance=255 dst-address=0.0.0.0/0 gateway=10.200.200.1 pref-src=10.200.200.222 routing-table=rtab-ether2 scope=30 suppress-hw-offload=no target-scope=10
+
 
