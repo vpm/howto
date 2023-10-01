@@ -16,5 +16,5 @@ Private network interface ether3 and ip address 10.255.255.1 netmask 255.255.255
 
 
 
-for check, you can ping host and see connect tracking in /ip/firewall/connections
+For check, you can ping host and see connect tracking in /ip/firewall/connections
 ![Alt text](mikrotik-2wan-with-aliases-ip-firewall-connections.png?raw=true "IP Firewall Connections")
