@@ -27,7 +27,7 @@ add disabled=no fib name=rtab-ether2-alias1
 ```
 ![Alt text](mikrotik-2wan-with-aliases-routing-tables.png?raw=true "Routing tables")
 
-Create routing table. Add route for eatch alias with distance 255 and set pref source alias ip for each
+Create routing table. Add route for eatch alias with distance more then default routes whithout pref source and set pref source ip alias for each
 ```
 /ip route
 add check-gateway=ping disabled=no distance=1 dst-address=0.0.0.0/0 gateway=10.100.100.1 pref-src="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
