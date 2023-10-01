@@ -1,5 +1,3 @@
-Network schema
-
 Mikrotik have 2 wan interfases (ether1, ether2) with 2 ip on each
 10.100.100.100,10.100.100.111 on ether1
 10.200.200.200, 10.200.200.222 on ether2.
