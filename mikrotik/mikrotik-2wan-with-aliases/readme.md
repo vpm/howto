@@ -12,3 +12,4 @@ primary inet     |    |                                mikrotik gateway         
 secondary inet   |    |                                                                                    |
 10.200.200.1/24) | -> | (ether2 10.200.200.200/24; ether2-alias1 10.200.200.222/24)                        |
 -----------------      -------------------------------------------------------------------------------------
+![Alt text](mikrotik-2wan-with-aliases-ip-adddress-list.png?raw=true "IP Address list")
