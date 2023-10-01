@@ -4,12 +4,12 @@ Private network interface ether3 and ip address 10.255.255.1 netmask 255.255.255
 ![Alt text](mikrotik-2wan-with-aliases-ip-adddress-list.png?raw=true "IP Address list")
 
 ![Alt text](mikrotik-2wan-with-aliases-routing-tables.png?raw=true "Routing tables")
+
 ![Alt text](mikrotik-2wan-with-aliases-ip-route-list.png?raw=true "IP Route list")
+
 ![Alt text](mikrotik-2wan-with-aliases-ip-firewall-mangle.png?raw=true "IP Firewall Mangle")
+
 ![Alt text](mikrotik-2wan-with-aliases-ip-firewall-nat.png?raw=true "IP Firewall Nat")
-
-
-
 
 
 
