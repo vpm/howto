@@ -20,7 +20,7 @@ add disabled=no fib name=rtab-ether2
 add disabled=no fib name=rtab-ether1-alias1
 add disabled=no fib name=rtab-ether2-alias1
 
-# first rules for incoming traffic from wan to mail-server
+# first rules for incoming traffic from wan to mail-server 10.255.255.55 ports 25,80,443,587
 /ip firewall nat
 add action=dst-nat chain=dstnat comment="smtp mail" dst-address=10.100.100.111 dst-port=25,80,443,587 in-interface=ether1 protocol=tcp to-addresses=10.255.255.55
 add action=dst-nat chain=dstnat comment="smtp mail" dst-address=10.200.200.222 dst-port=25,80,443,587 in-interface=ether2 protocol=tcp to-addresses=10.255.255.55
