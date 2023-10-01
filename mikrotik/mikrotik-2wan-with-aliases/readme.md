@@ -4,12 +4,14 @@
 
 
 # interfaces ip configuration
+```
 /ip address
 add address=10.100.100.100/24 interface=ether1 network=10.100.100.0
 add address=10.200.200.200/24 interface=ether2 network=10.200.200.0
 add address=10.100.100.111/24 interface=ether1 network=10.100.100.0
 add address=10.200.200.222/24 interface=ether2 network=10.200.200.0
 add address=10.255.255.1/24 interface=bridge-lan network=10.255.255.0
+```
 
 ![Alt text](mikrotik-2wan-with-aliases-ip-adddress-list.png?raw=true "IP Address list")
 
