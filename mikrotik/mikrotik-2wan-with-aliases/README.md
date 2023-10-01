@@ -35,7 +35,7 @@ add disabled=no distance=2 dst-address=0.0.0.0/0 gateway=10.200.200.1 pref-src="
 add disabled=no distance=255 dst-address=0.0.0.0/0 gateway=10.100.100.1 pref-src=10.100.100.111 routing-table=rtab-ether1-alias1 scope=30 suppress-hw-offload=no target-scope=10
 add disabled=no distance=255 dst-address=0.0.0.0/0 gateway=10.200.200.1 pref-src=10.200.200.222 routing-table=rtab-ether2-alias1 scope=30 suppress-hw-offload=no target-scope=10
 ```
-![Alt text](mikrotik-2wan-with-aliases-ip-route-list.png?raw=true "IP Route list")
+![Alt text](mikrotik7-2wan-with-aliases-ip-route-list.png?raw=true "IP Route list")
 
 Mark traffic from 10.255.255.55
 ```
@@ -58,7 +58,7 @@ add action=mark-routing chain=prerouting connection-mark=conection-ether2 in-int
 add action=mark-routing chain=output connection-mark=conection-ether1 new-routing-mark=rtab-ether1 passthrough=yes src-address=10.255.255.0/24
 add action=mark-routing chain=output connection-mark=conection-ether2 new-routing-mark=rtab-ether2 passthrough=yes src-address=10.255.255.0/24
 ```
-![Alt text](mikrotik-2wan-with-aliases-ip-firewall-mangle.png?raw=true "IP Firewall Mangle")
+![Alt text](mikrotik7-2wan-with-aliases-ip-firewall-mangle.png?raw=true "IP Firewall Mangle")
 
 First rules for incoming traffic from wan to mail-server 10.255.255.55 ports 25,80,443,587
 ```
