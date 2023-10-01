@@ -1,5 +1,7 @@
+```
 # Mikrotik have 2 wan interfases (ether1, ether2) with 2 ip on each 10.100.100.100,10.100.100.111 on ether1 and 10.200.200.200, 10.200.200.222 on ether2.
 # Private network interface ether3 and ip address 10.255.255.1 netmask 255.255.255.0 , mail server has lan ip 10.255.255.55
+```
 ![Alt text](mikrotik-2wan-with-aliases-schema.png?raw=true "IP Address list")
 
 # interfaces ip configuration
@@ -11,7 +13,6 @@ add address=10.100.100.111/24 interface=ether1 network=10.100.100.0
 add address=10.200.200.222/24 interface=ether2 network=10.200.200.0
 add address=10.255.255.1/24 interface=bridge-lan network=10.255.255.0
 ```
-
 ![Alt text](mikrotik-2wan-with-aliases-ip-adddress-list.png?raw=true "IP Address list")
 
 #  add routing tables for all interfaces
@@ -21,8 +22,9 @@ add disabled=no fib name=rtab-ether1
 add disabled=no fib name=rtab-ether2
 add disabled=no fib name=rtab-ether1-alias1
 add disabled=no fib name=rtab-ether2-alias1
-![Alt text](mikrotik-2wan-with-aliases-routing-tables.png?raw=true "Routing tables")
 ```
+![Alt text](mikrotik-2wan-with-aliases-routing-tables.png?raw=true "Routing tables")
+
 
 # create routing table
 ```
