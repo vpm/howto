@@ -11,6 +11,11 @@ secondary inet   |    |                               |
 10.200.200.1/24) | -> | (ether2 10.200.200.200/24;)   |
 -----------------      -------------------------------
 
+# add default route via 10.100.100.1 disatance=1 and route via 10.200.200.1 distance=2
+/ip route
+add check-gateway=ping disabled=no distance=1 dst-address=0.0.0.0/0 gateway=10.100.100.1 pref-src="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
+add disabled=no distance=2 dst-address=0.0.0.0/0 gateway=10.200.200.1 pref-src="" routing-table=main scope=30 suppress-hw-offload=no target-scope=10
+
 # add static route to host 1.1.1.3 (cloudflare dns) via default gateway
 /ip/route/add comment="route 1.1.1.3 via primary gateway" dst-address=1.1.1.3/32 gateway=[:put [/ip/route/get number=[/ip/route/find distance=1 dst-address=0.0.0.0/0] gateway ] ]
 
