@@ -79,9 +79,8 @@ NAT others outgoing traffic from local network 10.255.255.0/24 via ether1 and et
 /ip firewall nat
 add action=src-nat chain=srcnat out-interface=ether1 src-address=10.255.255.0/24 to-addresses=10.100.100.100
 add action=src-nat chain=srcnat out-interface=ether2 src-address=10.255.255.0/24 to-addresses=10.200.200.200
-![Alt text](mikrotik-2wan-with-aliases-ip-firewall-nat.png?raw=true "IP Firewall Nat")
 ```
-
+![Alt text](mikrotik-2wan-with-aliases-ip-firewall-nat.png?raw=true "IP Firewall Nat")
 
 
 For check, you can ping host and see connect tracking in /ip/firewall/connections
