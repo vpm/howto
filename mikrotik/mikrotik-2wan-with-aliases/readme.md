@@ -84,5 +84,7 @@ add action=src-nat chain=srcnat out-interface=ether2 src-address=10.255.255.0/24
 
 
 For check, you can ping host and see connections tracking in
-```/ip/firewall/connections```
+```
+/ip/firewall/connections
+```
 ![Alt text](mikrotik-2wan-with-aliases-ip-firewall-connections.png?raw=true "IP Firewall Connections")
