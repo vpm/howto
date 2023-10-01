@@ -53,10 +53,10 @@ Mark other traffic from local network 10.255.255.0/24 via ether1 and ether2
 /ip firewall mangle
 add action=mark-connection chain=prerouting connection-mark=no-mark dst-address=10.100.100.100 in-interface=ether1 new-connection-mark=conection-ether1 passthrough=yes
 add action=mark-connection chain=prerouting connection-mark=no-mark dst-address=10.200.200.200 in-interface=ether2 new-connection-mark=conection-ether2 passthrough=yes
-add action=mark-routing chain=prerouting connection-mark=conection-ether1 in-interface=!ether1 new-routing-mark=rtab-ether1 passthrough=yes
-add action=mark-routing chain=prerouting connection-mark=conection-ether2 in-interface=!ether2 new-routing-mark=rtab-ether2 passthrough=yes
-add action=mark-routing chain=output connection-mark=conection-ether1 new-routing-mark=rtab-ether1 passthrough=yes
-add action=mark-routing chain=output connection-mark=conection-ether2 new-routing-mark=rtab-ether2 passthrough=yes
+add action=mark-routing chain=prerouting connection-mark=conection-ether1 in-interface=!ether1 new-routing-mark=rtab-ether1 passthrough=yes src-address=10.255.255.0/24
+add action=mark-routing chain=prerouting connection-mark=conection-ether2 in-interface=!ether2 new-routing-mark=rtab-ether2 passthrough=yes src-address=10.255.255.0/24
+add action=mark-routing chain=output connection-mark=conection-ether1 new-routing-mark=rtab-ether1 passthrough=yes src-address=10.255.255.0/24
+add action=mark-routing chain=output connection-mark=conection-ether2 new-routing-mark=rtab-ether2 passthrough=yes src-address=10.255.255.0/24
 ```
 ![Alt text](mikrotik-2wan-with-aliases-ip-firewall-mangle.png?raw=true "IP Firewall Mangle")
 
