@@ -1,0 +1,17 @@
+dovecot_login:
+    driver = dovecot
+    public_name = LOGIN
+    server_socket = /var/run/dovecot/auth-client
+    server_set_id = $1
+
+dovecot_plain:
+    driver = dovecot
+    public_name = PLAIN
+    server_socket = /var/run/dovecot/auth-client
+    server_set_id = $1
+
+dovecot_cram_md5:
+    driver = dovecot
+    public_name = CRAM-MD5
+    server_socket = /var/run/dovecot/auth-client
+    server_set_id = $1
