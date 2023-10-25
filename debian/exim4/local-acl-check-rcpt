@@ -1,0 +1,4 @@
+   deny condition = ${if match_domain{$sender_address_domain}{+local_domains}{yes}{no}}
+   message = mail from $sender_address_domain allowed only from relay_from_hosts
+   log_message = mail from $sender_address_domain allowed only from relay_from_hosts
+   hosts = !+relay_from_hosts
