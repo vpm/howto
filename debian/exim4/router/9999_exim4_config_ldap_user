@@ -1,0 +1,26 @@
+ldap_aliases:
+    driver = redirect
+    domains = +local_domains
+    allow_fail
+    allow_defer
+    data = ${lookup ldap{LDAP_DN_USER LDAP_DN_PASS ldap:///LDAP_OU_ALIASES,LDAP_DC_BASE?rfc822mailmember?sub?(&(objectClass=nisMailAlias)(cn=${quote_ldap:$local_part}))}}
+    file_transport = address_file
+    pipe_transport = address_pipe
+
+ldap_groups_aliases:
+    driver = redirect
+    domains = +local_domains
+    data = ${lookup ldap{LDAP_DN_USER LDAP_DN_PASS ldap:///LDAP_OU_GROUPS,LDAP_DC_BASE?memberUID?sub?(&(cn=${quote_ldap:$local_part}))}}
+    file_transport = address_file
+    pipe_transport = address_pipe
+    allow_fail
+    allow_defer
+
+ldap_user:
+    driver = accept
+    domains = +local_domains
+    local_parts = ${lookup ldap{LDAP_DN_USER LDAP_DN_PASS ldap:///LDAP_OU_USERS,LDAP_DC_BASE?uid?sub?(&(objectclass=posixAccount)(uid=${quote_ldap:$local_part}))}}
+    user = mail
+    group = mail
+    transport = LOCAL_DELIVERY
+    cannot_route_message = User unknown
