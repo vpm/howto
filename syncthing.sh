@@ -1,6 +1,6 @@
 #!/bin/bash
 syncthing_uid=888
-syncthing_version=1.25
+syncthing_version=1.25.0
 
 # create user syncthing for daemon
 groupadd --gid ${syncthing_uid} --system syncthing; useradd -c syncthing --system --no-log-init --skel /dev/null --create-home --home-dir /var/lib/syncthing --shell /usr/sbin/nologin syncthing --gid ${syncthing_uid} --uid ${syncthing_uid}
