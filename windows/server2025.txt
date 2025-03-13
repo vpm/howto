@@ -14,5 +14,6 @@ Set-Culture uk-UA
 New-NetFirewallRule -DisplayName ICMPv4 -Direction Inbound -Protocol ICMPv4 -IcmpType 8 -Action Allow
 New-NetFirewallRule -DisplayName RDP -Direction Inbound -Protocol TCP -LocalPort 3389 -EdgeTraversalPolicy Allow -Action Allow
 
-
+Stop-Process -Name "AzureArcSysTray"
 DISM /online /NoRestart /Remove-Capability /CapabilityName:AzureArcSetup~~~~
+
