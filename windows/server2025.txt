@@ -16,3 +16,4 @@ DISM /online /NoRestart /Remove-Capability /CapabilityName:AzureArcSetup~~~~
 
 cscript //B "$env:SystemRoot\System32\slmgr.vbs" /ipk TVRH6-WHNXV-R9WG3-9XRFY-MY832
 cscript //B "$env:SystemRoot\System32\slmgr.vbs" /ato
+
