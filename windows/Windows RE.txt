@@ -1,4 +1,3 @@
-# shrink system disk for free space needed by recovery partition
 # disable recovery and delete recovery partition #4
 reagentc /disable
 diskpart
