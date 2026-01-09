@@ -1,8 +1,4 @@
-powercfg /setactive 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c
-powercfg /CHANGE monitor-timeout-ac 0
-
 Install-Language uk-UA -CopyToSettings
-
 
 Set-TimeZone -Id 'FLE Standard Time' -PassThru
 Set-WinSystemLocale -SystemLocale uk-UA
@@ -13,6 +9,9 @@ Set-WinHomeLocation -GeoId 0xF1
 Set-Culture uk-UA
 
 Copy-UserInternationalSettingsToSystem -WelcomeScreen $True -NewUser $True
+
+powercfg /setactive 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c
+powercfg /CHANGE monitor-timeout-ac 0
 
 New-NetFirewallRule -DisplayName ICMPv4 -Direction Inbound -Protocol ICMPv4 -IcmpType 8 -Action Allow
 New-NetFirewallRule -DisplayName RDP -Direction Inbound -Protocol TCP -LocalPort 3389 -EdgeTraversalPolicy Allow -Action Allow
