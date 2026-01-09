@@ -12,6 +12,8 @@ Set-WinUserLanguageList uk-UA,en-US -Force
 Set-WinHomeLocation -GeoId 0xF1
 Set-Culture uk-UA
 
+Copy-UserInternationalSettingsToSystem -WelcomeScreen $True -NewUser $True
+
 New-NetFirewallRule -DisplayName ICMPv4 -Direction Inbound -Protocol ICMPv4 -IcmpType 8 -Action Allow
 New-NetFirewallRule -DisplayName RDP -Direction Inbound -Protocol TCP -LocalPort 3389 -EdgeTraversalPolicy Allow -Action Allow
 
