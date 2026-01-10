@@ -22,8 +22,6 @@ Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Componen
 Stop-Process -Name "AzureArcSysTray"
 DISM /online /NoRestart /Remove-Capability /CapabilityName:AzureArcSetup~~~~
 
-Install-WindowsFeature -Name RDS-RD-Server –IncludeManagementTools
-
 cscript //B "$env:SystemRoot\System32\slmgr.vbs" /ipk TVRH6-WHNXV-R9WG3-9XRFY-MY832
 cscript //B "$env:SystemRoot\System32\slmgr.vbs" /ato
 
