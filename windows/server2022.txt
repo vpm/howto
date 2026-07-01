@@ -8,6 +8,9 @@ Set-WinUILanguageOverride -Language uk-UA
 Set-WinUserLanguageList uk-UA,en-US -Force
 Set-WinHomeLocation -GeoId 0xF1
 Set-Culture uk-UA
+
+Copy-UserInternationalSettingsToSystem -WelcomeScreen $True -NewUser $True
+
 New-NetFirewallRule -DisplayName ICMPv4 -Direction Inbound -Protocol ICMPv4 -IcmpType 8 -Action Allow
 New-NetFirewallRule -DisplayName RDP -Direction Inbound -Protocol TCP -LocalPort 3389 -EdgeTraversalPolicy Allow -Action Allow
 
@@ -19,3 +22,5 @@ DISM /online /NoRestart /Remove-Capability /CapabilityName:AzureArcSetup~~~~
 
 cscript //B "$env:SystemRoot\System32\slmgr.vbs" /ipk VDYBN-27WPP-V4HQT-9VMD4-VMK7H
 cscript //B "$env:SystemRoot\System32\slmgr.vbs" /ato
+
+Restart-Computer
