@@ -1,4 +1,3 @@
-Install-Language uk-UA -CopyToSettings
 
 Set-TimeZone -Id 'FLE Standard Time' -PassThru
 Set-WinSystemLocale -SystemLocale uk-UA
